@@ -1,0 +1,12 @@
+[Unit]
+Description=Force-unmount selected drives before shutdown (universal)
+DefaultDependencies=no
+Before=umount.target shutdown.target reboot.target halt.target
+After=graphical.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/safe-unmount.sh
+
+[Install]
+WantedBy=halt.target reboot.target shutdown.target

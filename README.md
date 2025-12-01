@@ -1,66 +1,83 @@
-# disk-unmount-daemon
+<div align="center">
 
-**disk-unmount-daemon** is a simple universal systemd service + shell script that automatically unmounts selected disk partitions during system shutdown, reboot, or halt.  
-It helps prevent filesystem corruption or bad sectors when a sudden power loss occurs while drives are actively in use.
+# 🔌 disk-unmount-daemon
+### Safe automatic disk unmounting service for Linux
 
-The project works with **any filesystem** (ext4, NTFS, FAT32, exFAT, Btrfs, etc.) because it only unmounts the specified devices.
+[![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE) 
+[![Platform](https://img.shields.io/badge/Platform-Linux-blue)](https://www.linux.org/) 
+[![systemd Service](https://img.shields.io/badge/Systemd-Service-orange)]()
 
----
-
-## Features
-
-- Automatically unmounts selected drives before shutdown.
-- Works on any filesystem / any OS partition.
-- Logs every unmount attempt to `/var/log/unmount-windows-drives.log`.
-- Log trimmed to last 10 entries to prevent large files.
-- Uses `umount -f` to ensure drive is released safely.
-- Minimal, reliable, and easy to customize.
+</div>
 
 ---
 
-## Repository Contents
+## 🚀 Overview
 
-### **1. disk-unmount-daemon.service**
+**disk-unmount-daemon** is a **universal systemd service + shell script** that automatically unmounts selected disk partitions before shutdown, reboot, or halt.  
 
+It prevents:
 
+- ❌ Filesystem corruption  
+- ❌ Bad sectors  
+- ❌ Lost data during power cuts  
 
-### **2. unmount-windows-drives.sh**
+Works with **any filesystem**: ext4, NTFS, FAT32, exFAT, Btrfs, etc.
 
 ---
 
-## Installation
+## ✨ Features
 
-### 1. Copy the script
-```
+- 🛡 Automatically unmounts drives before shutdown  
+- 🔄 Works on any filesystem / OS partition  
+- 📄 Logs all unmount attempts to `/var/log/unmount-windows-drives.log`  
+- 🧹 Log trimmed to last 10 entries  
+- ⚡ Forces unmount with `umount -f`  
+- 🔧 Minimal, reliable, and easy to customize  
+
+---
+
+## 🗂 Repository Contents
+
+| File | Description |
+|------|------------|
+| `disk-unmount-daemon.service` | systemd service file for auto-unmount |
+| `unmount-windows-drives.sh` | Script to unmount drives and log actions |
+
+---
+
+## 🛠 Installation
+
+### 1️⃣ Copy the script
+```bash
 sudo cp unmount-windows-drives.sh /usr/local/bin/
 sudo chmod +x /usr/local/bin/unmount-windows-drives.sh
 ```
 
-### 2. Copy the service file
-```
+### 2️⃣ Copy the service file
+```bash
 sudo cp disk-unmount-daemon.service /etc/systemd/system/
 ```
 
-### 3. Reload systemd
-```
+### 3️⃣ Reload systemd
+```bash
 sudo systemctl daemon-reload
 ```
 
-### 4. Enable the service
-```
+### 4️⃣ Enable the service
+```bash
 sudo systemctl enable disk-unmount-daemon.service
 ```
 
-### 5. (Optional) Test the script
-```
+### 5️⃣ Optional — Test manually
+```bash
 sudo /usr/local/bin/unmount-windows-drives.sh
 ```
 
 ---
 
-## Customization
+## ⚙ Customization
 
-To add or remove drives, edit the bottom of the script:
+Edit the script to add or remove drives:
 
 ```bash
 unmount_drive "/dev/sdb1"
@@ -68,33 +85,48 @@ unmount_drive "/dev/nvme0n1p2"
 unmount_drive "/dev/sdc3"
 ```
 
-List your partitions with:
+Check all partitions with:
 
-```
+```bash
 lsblk -f
 ```
 
 ---
 
-## Log File Location
+## 📄 Log File
 
-Logs are stored at:
+Logs stored at:
 
 ```
 /var/log/unmount-windows-drives.log
 ```
 
-Only last **10 lines** are kept automatically.
+Only the last **10 lines** are kept automatically.
 
 ---
 
-## License
+## 📝 License
 
-This project uses the license included in this repository.
+MIT License — see [LICENSE](LICENSE) file.
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
-Open for pull requests — improvements and universal compatibility ideas are welcome.
+Contributions welcome!  
+Pull requests for **new features, bug fixes, or cross-filesystem improvements** are encouraged.
 
+---
+
+<div align="center">
+
+```
+     _ _     _                                                 _            _                                  
+  __| (_)___| | __     _   _ _ __  _ __ ___   ___  _   _ _ __ | |_       __| | __ _  ___ _ __ ___   ___  _ __  
+ / _` | / __| |/ /____| | | | '_ \| '_ ` _ \ / _ \| | | | '_ \| __|____ / _` |/ _` |/ _ \ '_ ` _ \ / _ \| '_ \ 
+| (_| | \__ \   <_____| |_| | | | | | | | | | (_) | |_| | | | | ||_____| (_| | (_| |  __/ | | | | | (_) | | | |
+ \__,_|_|___/_|\_\     \__,_|_| |_|_| |_| |_|\___/ \__,_|_| |_|\__|     \__,_|\__,_|\___|_| |_| |_|\___/|_| |_|
+                                                                                                               
+```
+
+</div>

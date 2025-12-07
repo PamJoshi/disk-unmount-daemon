@@ -49,13 +49,13 @@ Works with **any filesystem**: ext4, NTFS, FAT32, exFAT, Btrfs, etc.
 
 ### 1️⃣ Copy the script
 ```bash
-sudo cp unmount-windows-drives.sh /usr/local/bin/
-sudo chmod +x /usr/local/bin/unmount-windows-drives.sh
+sudo cp safe-unmount.sh /usr/local/bin/
+sudo chmod +x /usr/local/bin/safe-unmount.sh
 ```
 
 ### 2️⃣ Copy the service file
 ```bash
-sudo cp disk-unmount-daemon.service /etc/systemd/system/
+sudo cp safe-unmount.service /etc/systemd/system/
 ```
 
 ### 3️⃣ Reload systemd
@@ -65,12 +65,12 @@ sudo systemctl daemon-reload
 
 ### 4️⃣ Enable the service
 ```bash
-sudo systemctl enable disk-unmount-daemon.service
+sudo systemctl enable safe-unmount.service.service
 ```
 
 ### 5️⃣ Optional — Test manually
 ```bash
-sudo /usr/local/bin/unmount-windows-drives.sh
+sudo /usr/local/bin/safe-unmount.service.sh
 ```
 
 ---

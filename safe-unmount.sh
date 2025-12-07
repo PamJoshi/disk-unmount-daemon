@@ -29,6 +29,3 @@ unmount_drive() {
 # Drives to unmount (universal)
 unmount_drive ""
 unmount_drive ""
-.
-.
-.

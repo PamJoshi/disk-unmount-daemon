@@ -1,21 +1,42 @@
 #!/bin/bash
 
-SCRIPT="/usr/local/bin/safe-unmount.sh"
+SCRIPT="/home/param/Desktop/disk-unmount-daemon/safe-unmount.sh"
 MARKER="# ADD_MORE_DRIVES_HERE"
 
+# Must be run as sudo
+if [[ $EUID -ne 0 ]]; then
+    echo "Run using: sudo ./safe-unmount-setup.sh"
+    exit
+fi
+
 echo "=== Available Partitions ==="
-lsblk -o NAME,SIZE,TYPE,MOUNTPOINT | grep part
+mapfile -t PARTS < <(lsblk -nrpo NAME,SIZE,TYPE,MOUNTPOINT | grep part)
 
-read -p "Enter partitions to unmount (space-separated): " -a drives
+# Show numbered list
+for i in "${!PARTS[@]}"; do
+    echo "$((i+1))) ${PARTS[$i]}"
+done
 
-for drive in "${drives[@]}"; do
-    if grep -q "$drive" "$SCRIPT"; then
-        echo "⚠ $drive already exists, skipping"
+echo
+read -p "Enter numbers or partition paths: " -a input
+
+for item in "${input[@]}"; do
+    # Convert number → actual partition info line
+    if [[ $item =~ ^[0-9]+$ ]]; then
+        line="${PARTS[$item-1]}"
+        dev=$(echo "$line" | awk '{print $1}')
     else
-        sudo sed -i "/$MARKER/a unmount_drive \"$drive\"" "$SCRIPT"
-        echo "✔ Added $drive"
+        dev="$item"
+    fi
+
+    # Prevent duplicates
+    if grep -q "$dev" "$SCRIPT"; then
+        echo "⚠ $dev already exists — skipping"
+    else
+        sed -i "/$MARKER/a unmount_drive \"$dev\"" "$SCRIPT"
+        echo "✔ Added $dev"
     fi
 done
 
-echo "Done. Updated list:"
+echo -e "\nDone. Updated drive list:"
 grep 'unmount_drive' "$SCRIPT"

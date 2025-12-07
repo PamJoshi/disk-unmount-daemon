@@ -26,6 +26,6 @@ unmount_drive() {
     fi
 }
 
-# Drives to unmount (universal)
-unmount_drive ""
-unmount_drive ""
+### Drives to unmount — setup script will append below this line ###
+# ADD_MORE_DRIVES_HERE
+

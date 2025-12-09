@@ -13,7 +13,7 @@
 
 ## 🚀 Overview
 
-**disk-unmount-daemon** is a **universal systemd service + shell script** that automatically unmounts selected disk partitions before shutdown, reboot, or halt.  
+**disk-unmount-daemon** is a **universal systemd service + shell script** that automatically stops ongoing processes and unmounts selected disk partitions before shutdown, reboot, or halt.  
 
 It prevents:
 
@@ -40,83 +40,22 @@ Works with **any filesystem**: ext4, NTFS, FAT32, exFAT, Btrfs, etc.
 
 | File | Description |
 |------|------------|
-| `disk-unmount-daemon.service` | systemd service file for auto-unmount |
-| `unmount-windows-drives.sh` | Script to unmount drives and log actions |
+| `safe-unmount.sh` | Script to unmount drives and log actions |
+| `safe-unmount.service` | systemd service for auto-unmount |
+| `safe-unmount-setup.sh` | Optional interactive setup installer |
 
 ---
 
 ## 🛠 Installation
 
-### 1️⃣ Copy the script
+### 1️⃣ Copy script & service
+
 ```bash
 sudo cp safe-unmount.sh /usr/local/bin/
 sudo chmod +x /usr/local/bin/safe-unmount.sh
-```
 
-### 2️⃣ Copy the service file
-```bash
 sudo cp safe-unmount.service /etc/systemd/system/
 ```
-
-### 3️⃣ Reload systemd
-```bash
-sudo systemctl daemon-reload
-```
-
-### 4️⃣ Enable the service
-```bash
-sudo systemctl enable safe-unmount.service.service
-```
-
-### 5️⃣ Optional — Test manually
-```bash
-sudo /usr/local/bin/safe-unmount.service.sh
-```
-
----
-
-## ⚙ Customization
-
-Edit the script to add or remove drives:
-
-```bash
-unmount_drive "/dev/sdb1"
-unmount_drive "/dev/nvme0n1p2"
-unmount_drive "/dev/sdc3"
-```
-
-Check all partitions with:
-
-```bash
-lsblk -f
-```
-
----
-
-## 📄 Log File
-
-Logs stored at:
-
-```
-/var/log/unmount-windows-drives.log
-```
-
-Only the last **10 lines** are kept automatically.
-
----
-
-## 📝 License
-
-MIT License — see [LICENSE](LICENSE) file.
-
----
-
-## 🤝 Contributing
-
-Contributions welcome!  
-Pull requests for **new features, bug fixes, or cross-filesystem improvements** are encouraged.
-
----
 
 <div align="center">
 
